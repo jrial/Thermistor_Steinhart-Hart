@@ -15,6 +15,7 @@
  */
 
 #include "Thermistor_Steinhart_Hart.h"
+#include <Esp.h>
 
 Thermistor::Thermistor(int pin) {
   _tempPin = pin;

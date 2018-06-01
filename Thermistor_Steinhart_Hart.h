@@ -1,6 +1,5 @@
 #ifndef Thermistor_Steinhart_Hart_h
 #define Thermistor_Steinhart_Hart_h
-#include <Esp.h>
 #include <math.h>
 
 class Thermistor {
