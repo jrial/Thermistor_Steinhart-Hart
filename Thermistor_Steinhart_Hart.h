@@ -38,7 +38,6 @@ class Thermistor {
     void setParams(float a, float b, float c);
 
   private:
-    void printDebug(int readVal);
     int _tempPin;
     float _thermistorRes;
     float _pulldownRes;
@@ -48,6 +47,7 @@ class Thermistor {
     float _param_a;
     float _param_b;
     float _param_c;
+    void printDebug(int readVal);
 };
 
 #endif
