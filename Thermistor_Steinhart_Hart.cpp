@@ -19,6 +19,8 @@
 
 Thermistor::Thermistor(int pin) {
   _tempPin = pin;
+  // Set default parameters for 3590 NTC thermistor
+  setParams(0.001129148, 0.000234125, 0.0000000876741);
   setup();
 }
 
@@ -37,11 +39,7 @@ float Thermistor::getTempK() {
     long thermistor_res = _pulldownRes * ((4095.0 / readVal) - 1);
     // Caching the Log(resistance) of the thermistor to avoid recalculating
     float lr = log(thermistor_res);
-    return (1 / (
-      0.001129148 +
-      0.000234125 * lr +
-      0.0000000876741 * pow(lr, 3)
-    ));
+    return (1 / (_param_a + _param_b * lr + _param_c * pow(lr, 3)));
   }
 }
 
@@ -63,6 +61,12 @@ void Thermistor::setup(float thermistorRes, float pulldownRes, float vcc) {
 void Thermistor::debug(bool state) {
   _debug = state;
   Serial.println("Thermistor debugging: " + (_debug) ? "ON" : "OFF");
+}
+
+void Thermistor::setParams(float a, float b, float c) {
+  _param_a = a;
+  _param_b = b;
+  _param_c = c;
 }
 
 void Thermistor::printDebug(int readVal) {

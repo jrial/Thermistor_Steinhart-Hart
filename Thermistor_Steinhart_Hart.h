@@ -35,6 +35,7 @@ class Thermistor {
     float getTempC();
     float getTempF();
     void debug(bool state);
+    void setParams(float a, float b, float c);
 
   private:
     void printDebug(int readVal);
@@ -43,6 +44,10 @@ class Thermistor {
     float _pulldownRes;
     float _vcc;
     bool _debug;
+    // The A, B and C parameters in the Steinhart-Hart equation
+    float _param_a;
+    float _param_b;
+    float _param_c;
 };
 
 #endif
