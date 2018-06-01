@@ -1,3 +1,19 @@
+/*
+ * Thermistor library, using the Steinhart-Hart Equation:
+ * https://en.wikipedia.org/wiki/Steinhart%E2%80%93Hart_equation
+ *    Temperature in Kelvin = 1 / {A + B[ln(R)] + C[ln(R)]3}
+ *
+ * Default weights are for a 3590 NTC thermistor:
+ * See http://www.rixratas.ee/jaga/jaga.php?fn=NTC_MF52AT_10K.jpg
+ *    A = 0.001129148, B = 0.000234125, C = 8.76741E-08
+ *
+ * Schematic:
+ *   [Ground] -- [Pulldown-Resistor] -- | -- [Thermistor] --[Vcc]
+ *                                      |
+ *                                  Analog Pin
+ *
+ */
+
 #ifndef Thermistor_Steinhart_Hart_h
 #define Thermistor_Steinhart_Hart_h
 #include <math.h>
