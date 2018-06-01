@@ -25,8 +25,8 @@ class Thermistor {
     void setup(
       // thermistor nominal resistance
       float thermistorRes = 10000,
-      // balance/pad resistor value, set this to the measured resistance of
-      // your pad resistor
+      // pulldown resistor value, set this to the measured resistance of
+      // your pulldown resistor
       float pulldownRes = 10000,
       // only used for display purposes, if used set to the measured Vcc.
       float vcc = 5.0
