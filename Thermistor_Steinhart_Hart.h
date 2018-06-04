@@ -48,6 +48,8 @@ class Thermistor {
     float _param_b;
     float _param_c;
     void printDebug(int readVal);
+    float getThermistorRes(int readVal);
+    float getTempK(float thermistorRes);
 };
 
 #endif
