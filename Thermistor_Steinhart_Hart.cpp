@@ -17,11 +17,13 @@
 #include "Thermistor_Steinhart_Hart.h"
 #include <Esp.h>
 
+// Public methods
+
 Thermistor::Thermistor(int pin) {
   _tempPin = pin;
   // Set default parameters for 3590 NTC thermistor
-  setParams(0.001129148, 0.000234125, 0.0000000876741);
-  setup();
+  setThermistorParams();
+  setSchematicParams();
 }
 
 float Thermistor::getTempK() {
@@ -48,23 +50,26 @@ float Thermistor::getTempF() {
   return 32 + 9 *(getTempK() - 273.15)  / 5;
 }
 
-void Thermistor::setup(float thermistorRes, float pulldownRes, float vcc) {
+void Thermistor::debug(bool state) {
+  _debug = state;
+  Serial.println("Thermistor debugging: " + (_debug) ? "ON" : "OFF");
+}
+
+void Thermistor::setThermistorParams(float a, float b, float c) {
+  _param_a = a;
+  _param_b = b;
+  _param_c = c;
+}
+
+void Thermistor::setSchematicParams(float pulldownRes, float thermistorRes, float vcc) {
   _thermistorRes = thermistorRes;
   _pulldownRes = pulldownRes;
   _vcc = vcc;
   _debug = false;
 }
 
-void Thermistor::debug(bool state) {
-  _debug = state;
-  Serial.println("Thermistor debugging: " + (_debug) ? "ON" : "OFF");
-}
 
-void Thermistor::setParams(float a, float b, float c) {
-  _param_a = a;
-  _param_b = b;
-  _param_c = c;
-}
+// Private methods
 
 void Thermistor::printDebug(int readVal) {
   Serial.print("ADC: ");

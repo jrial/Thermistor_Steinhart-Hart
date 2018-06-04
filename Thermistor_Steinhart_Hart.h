@@ -22,20 +22,24 @@ class Thermistor {
   public:
     Thermistor(int pin);
     // ~Thermistor();
-    void setup(
-      // thermistor nominal resistance
-      float thermistorRes = 10000,
-      // pulldown resistor value, set this to the measured resistance of
-      // your pulldown resistor
-      float pulldownRes = 10000,
-      // only used for display purposes, if used set to the measured Vcc.
-      float vcc = 5.0
-    );
     float getTempK();
     float getTempC();
     float getTempF();
     void debug(bool state);
-    void setParams(float a, float b, float c);
+    void setThermistorParams(
+      // Using default parameters for 3590 NTC thermistor
+      float a = 0.001129148,
+      float b = 0.000234125,
+      float c = 0.0000000876741);
+    void setSchematicParams(
+      // Pulldown resistor value, set this to the measured resistance of
+      // your pulldown resistor.
+      float pulldownRes = 10000,
+      // Only used for debug purposes, thermistor nominal resistance.
+      float thermistorRes = 10000,
+      // Only used for debug purposes, if used set to the measured Vcc.
+      float vcc = 5.0
+    );
 
   private:
     int _tempPin;
