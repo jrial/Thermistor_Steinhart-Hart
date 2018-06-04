@@ -72,23 +72,36 @@ void Thermistor::setSchematicParams(float pulldownRes, float thermistorRes, floa
 // Private methods
 
 void Thermistor::printDebug(int readVal) {
-  Serial.print("ADC: ");
-  Serial.println(readVal);
+
+  Serial.print("Thermistor Nominal Value: ");
+  Serial.print(_thermistorRes / 1000, 3);
+  Serial.println("k");
+
+  Serial.print("Pulldown Resistor: ");
+  Serial.print(_pulldownRes / 1000, 3);
+  Serial.println("k");
 
   Serial.print("VCC: ");
   Serial.println(_vcc, 2);
 
-  Serial.print("Pulldown: ");
-  Serial.print(_pulldownRes / 1000, 3);
-  Serial.println("K");
+  Serial.print("ADC: ");
+  Serial.println(readVal);
 
   Serial.print("Voltage: ");
   Serial.println(((readVal * _vcc) / 4095.0), 3);
 
   Serial.print("Thermistor Resistance: ");
   if (readVal > 0) {
-    Serial.print(_pulldownRes * ((4095.0 / readVal) - 1));
+    long thermistor_res = getThermistorRes(readVal);
+    Serial.print(thermistor_res);
     Serial.println(" Ohms, ");
+
+    long temp_k = getTempK(thermistor_res);
+    Serial.print("Which coincides with: ");
+    Serial.print(temp_k);
+    Serial.print("Kelvin, or ");
+    Serial.print(temp_k - 273.15);
+    Serial.println("degree Celcius");
   } else {
     Serial.println("N/A!");
     Serial.print("Measuring ");
