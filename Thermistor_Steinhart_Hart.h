@@ -17,10 +17,11 @@
 #ifndef Thermistor_Steinhart_Hart_h
 #define Thermistor_Steinhart_Hart_h
 #include <math.h>
+#include <Esp.h>
 
 class Thermistor {
   public:
-    Thermistor(int pin);
+    Thermistor(int tempPin, int togglePin = NOT_A_PIN);
     // ~Thermistor();
     float getTempK();
     float getTempC();
@@ -43,6 +44,7 @@ class Thermistor {
 
   private:
     int _tempPin;
+    int _togglePin;
     float _thermistorRes;
     float _pulldownRes;
     float _vcc;

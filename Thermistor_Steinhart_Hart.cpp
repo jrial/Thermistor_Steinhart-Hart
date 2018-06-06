@@ -15,31 +15,29 @@
  */
 
 #include "Thermistor_Steinhart_Hart.h"
-#include <Esp.h>
 
 // Public methods
 
-Thermistor::Thermistor(int pin) {
-  _tempPin = pin;
+Thermistor::Thermistor(int tempPin, int togglePin) {
+  _tempPin = tempPin;
+  _togglePin = togglePin;
+  if (_togglePin != NOT_A_PIN) {
+    digitalWrite(_togglePin, LOW);
+  }
   // Set default parameters for 3590 NTC thermistor
   setThermistorParams();
   setSchematicParams();
 }
 
 float Thermistor::getTempK() {
+  if (_togglePin != NOT_A_PIN) {
+    digitalWrite(_togglePin, HIGH);
+  }
   int readVal = analogRead(_tempPin);
-  if (_debug) {
-    printDebug(readVal);
+  if (_togglePin != NOT_A_PIN) {
+    digitalWrite(_togglePin, LOW);
   }
-  if (readVal == 0) {
-    // We should never read 0 due to the way the schematic is set up,
-    // so if we do, return a negative Kelvin value so the application
-    // knows something's wrong and can act approrpiately. Avoids
-    // division by zero in getThermistorRes().
-    return -1.0;
-  } else {
-    return getTempK(getThermistorRes(readVal));
-  }
+  return getTempK(getThermistorRes(readVal));
 }
 
 float Thermistor::getTempC() {
@@ -113,7 +111,18 @@ void Thermistor::printDebug(int readVal) {
 }
 
 float Thermistor::getThermistorRes(int readVal) {
+  if (_debug) {
+    printDebug(readVal);
+  }
+  if (readVal == 0) {
+    // We should never read 0 due to the way the schematic is set up,
+    // so if we do, return a negative Kelvin value so the application
+    // knows something's wrong and can act approrpiately. Avoids
+    // division by zero.
+    return -1.0;
+  } else {
     return _pulldownRes * ((4095.0 / readVal) - 1);
+  }
 }
 
 float Thermistor::getTempK(float thermistorRes) {
