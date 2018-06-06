@@ -126,7 +126,7 @@ float Thermistor::getThermistorRes(int readVal) {
 }
 
 float Thermistor::getTempK(float thermistorRes) {
-    // Caching the Log(resistance) of the thermistor to avoid recalculating
-    float lr = log(thermistorRes);
-    return (1 / (_param_a + _param_b * lr + _param_c * pow(lr, 3)));
+  // Caching the Log(resistance) of the thermistor to avoid recalculating
+  float lr = log(thermistorRes);
+  return (1 / (_param_a + _param_b * lr + _param_c * pow(lr, 3)));
 }
