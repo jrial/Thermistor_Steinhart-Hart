@@ -100,9 +100,9 @@ void Thermistor::printDebug(int readVal) {
     long temp_k = getTempK(thermistor_res);
     Serial.print("Which coincides with: ");
     Serial.print(temp_k);
-    Serial.print("Kelvin, or ");
+    Serial.print(" Kelvin, or ");
     Serial.print(temp_k - 273.15);
-    Serial.println("degree Celcius");
+    Serial.println(" degree Celcius");
   } else {
     Serial.println("N/A!");
     Serial.print("Measuring ");
