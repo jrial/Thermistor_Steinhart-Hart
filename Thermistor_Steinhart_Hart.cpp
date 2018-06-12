@@ -93,11 +93,11 @@ void Thermistor::printDebug(int readVal) {
 
   Serial.print("Thermistor Resistance: ");
   if (readVal > 0) {
-    long thermistor_res = getThermistorRes(readVal);
+    float thermistor_res = getThermistorRes(readVal);
     Serial.print(thermistor_res);
     Serial.println(" Ohms, ");
 
-    long temp_k = getTempK(thermistor_res);
+    float temp_k = getTempK(thermistor_res);
     Serial.print("Which coincides with: ");
     Serial.print(temp_k);
     Serial.print(" Kelvin, or ");
