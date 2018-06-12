@@ -34,6 +34,9 @@ float Thermistor::getTempK() {
     digitalWrite(_togglePin, HIGH);
   }
   int readVal = analogRead(_tempPin);
+  if (_debug) {
+    printDebug(readVal);
+  }
   if (_togglePin != NOT_A_PIN) {
     digitalWrite(_togglePin, LOW);
   }
@@ -111,9 +114,6 @@ void Thermistor::printDebug(int readVal) {
 }
 
 float Thermistor::getThermistorRes(int readVal) {
-  if (_debug) {
-    printDebug(readVal);
-  }
   if (readVal == 0) {
     // We should never read 0 due to the way the schematic is set up,
     // so if we do, return a negative Kelvin value so the application
